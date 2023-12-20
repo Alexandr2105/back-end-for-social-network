@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { settings } from '../../common/helper/settings';
 
 @Injectable()
-export class Jwt {
+export class CreateJwt {
   constructor(
     protected jwt: JwtService,
     protected refreshToken: JwtService,
