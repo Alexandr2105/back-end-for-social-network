@@ -1,7 +1,9 @@
 import { config } from 'dotenv';
+import * as process from 'process';
 config();
 
 export const settings = {
+  PORT: process.env.PORT,
   JWT_SECRET: process.env.JWT_SECRET || '1234',
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET || '12345',
   TOKEN_LIFE: 1800,
