@@ -10,7 +10,7 @@ export class UsersQueryRepository {
     private readonly usersCollection: Repository<UserEntity>,
   ) {}
 
-  getAllUsers() {
+  getAllUsers(): Promise<UserEntity[]> {
     return this.usersCollection.find({
       select: {
         userId: true,

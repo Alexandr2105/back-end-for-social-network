@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { RegistrationDto } from './dto/registration.dto';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreateJwt } from './create.jwt';
 import { CreateUserCommand } from './application/useCases/create.user.use-case';
 import { LocalAuthGuard } from '../../common/guards/local.auth.guard';
 import { LoginDto } from './dto/login.dto';
@@ -20,13 +19,10 @@ import { GetInformationAboutCommand } from '../users/application/useCase/get.inf
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly jwtService: CreateJwt,
-    private readonly commandBus: CommandBus,
-  ) {}
+  constructor(private readonly commandBus: CommandBus) {}
 
   @HttpCode(204)
-  @Get('registration')
+  @Post('registration')
   async registration(@Body() body: RegistrationDto): Promise<void> {
     await this.commandBus.execute(new CreateUserCommand(body));
   }

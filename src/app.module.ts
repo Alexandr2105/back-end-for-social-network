@@ -18,6 +18,11 @@ import { LocalStrategy } from './common/strategies/local.strategy';
 import { CreateJwtUseCase } from './features/auth/application/useCases/create.jwt.use-case';
 import { JwtStrategy } from './common/strategies/jwt.strategy';
 import { GetInformationAboutUserUseCase } from './features/users/application/useCase/get.information.about.user.use-case';
+import { UsersController } from './features/users/users.controller';
+import { GetAllUsersUseCase } from './features/users/application/useCase/get.All.users.use-case';
+import { UpdateUserUseCase } from './features/users/application/useCase/update.user.use-case';
+import { CheckUserIdInDb } from './features/users/validators/check.user.id.in.db';
+import { DeleteUserUseCase } from './features/users/application/useCase/delete.user.use-case';
 
 config();
 
@@ -27,9 +32,12 @@ const useCases = [
   CreateUserUseCase,
   CreateJwtUseCase,
   GetInformationAboutUserUseCase,
+  GetAllUsersUseCase,
+  UpdateUserUseCase,
+  DeleteUserUseCase,
 ];
 const repositories = [UsersRepository, UsersQueryRepository];
-const validators = [CheckEmailInDb];
+const validators = [CheckEmailInDb, CheckUserIdInDb];
 
 @Module({
   imports: [
@@ -53,7 +61,7 @@ const validators = [CheckEmailInDb];
     JwtModule.register({}),
     CqrsModule,
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController, AuthController, UsersController],
   providers: [
     AppService,
     CreateJwt,
