@@ -23,6 +23,7 @@ import { GetAllUsersUseCase } from './features/users/application/useCase/get.All
 import { UpdateUserUseCase } from './features/users/application/useCase/update.user.use-case';
 import { CheckUserIdInDb } from './features/users/validators/check.user.id.in.db';
 import { DeleteUserUseCase } from './features/users/application/useCase/delete.user.use-case';
+import { QueryHelper } from './common/helper/query.helper';
 
 config();
 
@@ -66,6 +67,7 @@ const validators = [CheckEmailInDb, CheckUserIdInDb];
     AppService,
     CreateJwt,
     BcryptService,
+    QueryHelper,
     ...strategies,
     ...useCases,
     ...repositories,

@@ -2,16 +2,23 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entites/users.entity';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { QueryHelper } from '../../common/helper/query.helper';
+import { QueryUserViewModel } from './viewModels/query.user.view.model';
 
 @Injectable()
 export class UsersQueryRepository {
   constructor(
     @InjectRepository(UserEntity)
     private readonly usersCollection: Repository<UserEntity>,
+    private readonly queryHelper: QueryHelper,
   ) {}
 
-  getAllUsers(): Promise<UserEntity[]> {
-    return this.usersCollection.find({
+  async getAllUsers(queryParam: any): Promise<QueryUserViewModel> {
+    const skip = this.queryHelper.skipHelper(
+      queryParam.pageNumber,
+      queryParam.pageSize,
+    );
+    const [users, totalCount] = await this.usersCollection.findAndCount({
       select: {
         userId: true,
         fullName: true,
@@ -23,7 +30,21 @@ export class UsersQueryRepository {
         country: true,
         avatar: true,
       },
+      order: { [queryParam.sortBy]: queryParam.sortDirection },
+      skip: skip,
+      take: queryParam.pageSize,
     });
+    const pagesCount = this.queryHelper.pagesCountHelper(
+      totalCount,
+      queryParam.pageSize,
+    );
+    return {
+      pagesCount: pagesCount,
+      page: queryParam.pageNumber,
+      pageSize: queryParam.pageSize,
+      totalCount: totalCount,
+      items: users,
+    };
   }
 
   async getUserByEmail(email: any): Promise<UserEntity> {
