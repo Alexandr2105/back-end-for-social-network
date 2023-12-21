@@ -1,7 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UsersQueryRepository } from '../../users.query.repository';
-import { UserEntity } from '../../entites/users.entity';
-import { query } from 'express';
 import { QueryUserViewModel } from '../../viewModels/query.user.view.model';
 
 export class GetAllUsersCommand {
