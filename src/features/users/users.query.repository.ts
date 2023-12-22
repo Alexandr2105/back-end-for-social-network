@@ -20,12 +20,16 @@ export class UsersQueryRepository {
     );
     const [users, totalCount] = await this.usersCollection.findAndCount({
       select: {
-        userId: true,
+        id: true,
         fullName: true,
         email: true,
         createdAt: true,
         follow: true,
+        profile: {
+          avatar: true,
+        },
       },
+      relations: { profile: true },
       order: { [queryParam.sortBy]: queryParam.sortDirection },
       skip: skip,
       take: queryParam.pageSize,
@@ -50,8 +54,8 @@ export class UsersQueryRepository {
   }
   async getUserById(userId: number): Promise<any> {
     return this.usersCollection.findOne({
-      where: { userId: userId },
-      select: { userId: true, fullName: true, createdAt: true, email: true },
+      where: { id: userId },
+      select: { id: true, fullName: true, createdAt: true, email: true },
     });
   }
 }

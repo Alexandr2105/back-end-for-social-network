@@ -15,13 +15,13 @@ export class UsersRepository {
     return this.usersCollection.save(user);
   }
 
-  async updateUser(userId: number, body: UpdateUserDto): Promise<boolean> {
-    await this.usersCollection.update({ userId: userId }, { ...body });
+  async updateUser(id: number, body: UpdateUserDto): Promise<boolean> {
+    await this.usersCollection.update({ id: id }, { ...body });
     return true;
   }
 
-  async deleteUser(userId: number): Promise<boolean> {
-    await this.usersCollection.delete({ userId: userId });
+  async deleteUser(id: number): Promise<boolean> {
+    await this.usersCollection.delete({ id: id });
     return true;
   }
 }

@@ -1,9 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ProfileEntity } from '../../profiles/entities/profile.entity';
 
 @Entity()
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  userId: number;
+  id: number;
   @Column()
   fullName: string;
   @Column()
@@ -14,4 +15,7 @@ export class UserEntity {
   createdAt: string;
   @Column({ default: false })
   follow: boolean;
+
+  @OneToOne(() => ProfileEntity, (profile) => profile.user)
+  profile: ProfileEntity;
 }

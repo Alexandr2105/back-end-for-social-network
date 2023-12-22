@@ -17,11 +17,4 @@ export class RegistrationDto {
   @IsString()
   @Length(3, 20)
   password: string;
-  avatar: string;
-  @Transform(({ value }) => value.trim())
-  @IsString()
-  country: string;
-  @Transform(({ value }) => value.trim())
-  @IsString()
-  city: string;
 }

@@ -1,7 +1,10 @@
 export class UserViewModel {
-  userId: number;
+  id: number;
   fullName: string;
   email: string;
   createdAt: string;
   follow: boolean;
+  profile: {
+    avatar: string;
+  };
 }

@@ -1,16 +1,23 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { UserEntity } from '../../users/entites/users.entity';
 
 @Entity()
 export class ProfileEntity {
   @PrimaryGeneratedColumn()
-  profileId: number;
+  id: number;
   @Column()
   userId: number;
   @Column({ default: false })
   lookingForAJob: boolean;
   @Column({ default: null })
   lookingForAJobDescription: string;
-  @Column({ default: null })
+  @Column()
   avatar: string;
   @Column({ default: null })
   country: string;
@@ -18,4 +25,8 @@ export class ProfileEntity {
   city: string;
   @Column({ default: null })
   status: string;
+
+  @OneToOne(() => UserEntity, (user) => user.profile)
+  @JoinColumn()
+  user: UserEntity;
 }
