@@ -16,14 +16,6 @@ export class CreateUserUseCase implements ICommandHandler<CreateUserCommand> {
   ) {}
 
   async execute(command: CreateUserCommand): Promise<UserEntity> {
-    // const user = await this.usersRepository.getUserByEmail(
-    //   command.userDto.email,
-    // );
-    // if (user)
-    //   throw new BadRequestException({
-    //     message: 'Такой email уже сущуствует',
-    //     field: 'email',
-    //   });
     const password = command.userDto.password;
     const hashPassword =
       await this.bcryptService.generateHashForNewUser(password);
@@ -32,9 +24,6 @@ export class CreateUserUseCase implements ICommandHandler<CreateUserCommand> {
     newUser.password = hashPassword;
     newUser.email = command.userDto.email;
     newUser.fullName = command.userDto.fullName;
-    newUser.avatar = command.userDto.avatar;
-    newUser.city = command.userDto.city;
-    newUser.country = command.userDto.country;
     return this.usersRepository.createUser(newUser);
   }
 }

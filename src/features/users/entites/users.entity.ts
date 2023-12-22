@@ -12,14 +12,6 @@ export class UserEntity {
   password: string;
   @Column()
   createdAt: string;
-  @Column({ default: null })
-  avatar: string;
   @Column({ default: false })
   follow: boolean;
-  @Column({ default: null })
-  status: string;
-  @Column({ default: null })
-  country: string;
-  @Column({ default: null })
-  city: string;
 }

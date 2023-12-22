@@ -3,9 +3,5 @@ export class UserViewModel {
   fullName: string;
   email: string;
   createdAt: string;
-  avatar: string;
   follow: boolean;
-  status: string;
-  country: string;
-  city: string;
 }

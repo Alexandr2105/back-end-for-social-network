@@ -24,10 +24,12 @@ import { UpdateUserUseCase } from './features/users/application/useCase/update.u
 import { CheckUserIdInDb } from './features/users/validators/check.user.id.in.db';
 import { DeleteUserUseCase } from './features/users/application/useCase/delete.user.use-case';
 import { QueryHelper } from './common/helper/query.helper';
+import { ContactsUserEntity } from './features/profiles/entities/contacts.user.entity';
+import { ProfileEntity } from './features/profiles/entities/profile.entity';
 
 config();
 
-const entities = [UserEntity];
+const entities = [UserEntity, ProfileEntity, ContactsUserEntity];
 const strategies = [LocalStrategy, JwtStrategy];
 const useCases = [
   CreateUserUseCase,
