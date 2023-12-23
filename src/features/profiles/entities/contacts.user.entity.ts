@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { UserEntity } from '../../users/entites/users.entity';
 
 @Entity()
 export class ContactsUserEntity {
@@ -20,4 +21,10 @@ export class ContactsUserEntity {
   youtube: string;
   @Column({ default: null })
   mainLink: string;
+
+  @OneToOne(() => UserEntity, (user) => user.contactUser, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn()
+  user: UserEntity;
 }

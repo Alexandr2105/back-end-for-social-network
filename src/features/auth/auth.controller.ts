@@ -10,12 +10,12 @@ import {
 } from '@nestjs/common';
 import { RegistrationDto } from './dto/registration.dto';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreateUserCommand } from './application/useCases/create.user.use-case';
+import { CreateUserCommand } from '../users/application/useCases/create.user.use-case';
 import { LocalAuthGuard } from '../../common/guards/local.auth.guard';
 import { LoginDto } from './dto/login.dto';
 import { CreateJwtCommand } from './application/useCases/create.jwt.use-case';
 import { JwtAuthGuard } from '../../common/guards/jwt.auth.guard';
-import { GetInformationAboutCommand } from '../users/application/useCase/get.information.about.user.use-case';
+import { GetInformationAboutCommand } from '../users/application/useCases/get.information.about.user.use-case';
 
 @Controller('auth')
 export class AuthController {

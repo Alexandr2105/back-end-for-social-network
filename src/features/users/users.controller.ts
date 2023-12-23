@@ -8,11 +8,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { GetAllUsersCommand } from './application/useCase/get.All.users.use-case';
-import { UpdateUserCommand } from './application/useCase/update.user.use-case';
+import { GetAllUsersCommand } from './application/useCases/get.All.users.use-case';
+import { UpdateUserCommand } from './application/useCases/update.user.use-case';
 import { UpdateUserDto } from './dto/update.user.dto';
 import { UserIdDto } from './dto/user.id.dto';
-import { DeleteUserCommand } from './application/useCase/delete.user.use-case';
+import { DeleteUserCommand } from './application/useCases/delete.user.use-case';
 import { QueryHelper } from '../../common/helper/query.helper';
 import { QueryUserViewModel } from './viewModels/query.user.view.model';
 

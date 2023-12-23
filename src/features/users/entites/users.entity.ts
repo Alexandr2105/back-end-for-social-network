@@ -1,5 +1,6 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ProfileEntity } from '../../profiles/entities/profile.entity';
+import { ContactsUserEntity } from '../../profiles/entities/contacts.user.entity';
 
 @Entity()
 export class UserEntity {
@@ -18,4 +19,6 @@ export class UserEntity {
 
   @OneToOne(() => ProfileEntity, (profile) => profile.user)
   profile: ProfileEntity;
+  @OneToOne(() => ContactsUserEntity, (contactUser) => contactUser.userId)
+  contactUser: ContactsUserEntity;
 }

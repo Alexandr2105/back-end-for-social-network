@@ -17,7 +17,7 @@ export class ProfileEntity {
   lookingForAJob: boolean;
   @Column({ default: null })
   lookingForAJobDescription: string;
-  @Column()
+  @Column({ default: null })
   avatar: string;
   @Column({ default: null })
   country: string;
@@ -26,7 +26,7 @@ export class ProfileEntity {
   @Column({ default: null })
   status: string;
 
-  @OneToOne(() => UserEntity, (user) => user.profile)
+  @OneToOne(() => UserEntity, (user) => user.profile, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: UserEntity;
 }

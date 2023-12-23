@@ -12,20 +12,23 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { UsersRepository } from './features/users/users.repository';
 import { CheckEmailInDb } from './features/auth/validators/check.email.in.db';
 import { UsersQueryRepository } from './features/users/users.query.repository';
-import { CreateUserUseCase } from './features/auth/application/useCases/create.user.use-case';
+import { CreateUserUseCase } from './features/users/application/useCases/create.user.use-case';
 import { BcryptService } from './common/bcript/bcript.service';
 import { LocalStrategy } from './common/strategies/local.strategy';
 import { CreateJwtUseCase } from './features/auth/application/useCases/create.jwt.use-case';
 import { JwtStrategy } from './common/strategies/jwt.strategy';
-import { GetInformationAboutUserUseCase } from './features/users/application/useCase/get.information.about.user.use-case';
+import { GetInformationAboutUserUseCase } from './features/users/application/useCases/get.information.about.user.use-case';
 import { UsersController } from './features/users/users.controller';
-import { GetAllUsersUseCase } from './features/users/application/useCase/get.All.users.use-case';
-import { UpdateUserUseCase } from './features/users/application/useCase/update.user.use-case';
+import { GetAllUsersUseCase } from './features/users/application/useCases/get.All.users.use-case';
+import { UpdateUserUseCase } from './features/users/application/useCases/update.user.use-case';
 import { CheckUserIdInDb } from './features/users/validators/check.user.id.in.db';
-import { DeleteUserUseCase } from './features/users/application/useCase/delete.user.use-case';
+import { DeleteUserUseCase } from './features/users/application/useCases/delete.user.use-case';
 import { QueryHelper } from './common/helper/query.helper';
 import { ContactsUserEntity } from './features/profiles/entities/contacts.user.entity';
 import { ProfileEntity } from './features/profiles/entities/profile.entity';
+import { ProfilesControllers } from './features/profiles/profiles.controllers';
+import { CreateProfileUseCase } from './features/profiles/application/useCases/create.profile.use-case';
+import { ProfileRepository } from './features/profiles/profile.repository';
 
 config();
 
@@ -38,8 +41,9 @@ const useCases = [
   GetAllUsersUseCase,
   UpdateUserUseCase,
   DeleteUserUseCase,
+  CreateProfileUseCase,
 ];
-const repositories = [UsersRepository, UsersQueryRepository];
+const repositories = [UsersRepository, UsersQueryRepository, ProfileRepository];
 const validators = [CheckEmailInDb, CheckUserIdInDb];
 
 @Module({
@@ -64,7 +68,12 @@ const validators = [CheckEmailInDb, CheckUserIdInDb];
     JwtModule.register({}),
     CqrsModule,
   ],
-  controllers: [AppController, AuthController, UsersController],
+  controllers: [
+    AppController,
+    AuthController,
+    UsersController,
+    ProfilesControllers,
+  ],
   providers: [
     AppService,
     CreateJwt,

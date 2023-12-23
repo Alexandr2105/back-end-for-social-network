@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { BcryptService } from '../../../../common/bcript/bcript.service';
-import { UserEntity } from '../../../users/entites/users.entity';
-import { UsersRepository } from '../../../users/users.repository';
-import { RegistrationDto } from '../../dto/registration.dto';
+import { UserEntity } from '../../entites/users.entity';
+import { UsersRepository } from '../../users.repository';
+import { RegistrationDto } from '../../../auth/dto/registration.dto';
 
 export class CreateUserCommand {
   constructor(public userDto: RegistrationDto) {}
