@@ -11,20 +11,10 @@ window.onload = function() {
   "swaggerDoc": {
     "openapi": "3.0.0",
     "paths": {
-      "/": {
-        "get": {
-          "operationId": "AppController_getHello",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          }
-        }
-      },
       "/auth/registration": {
         "post": {
           "operationId": "AuthController_registration",
+          "summary": "Registration",
           "parameters": [],
           "requestBody": {
             "required": true,
@@ -39,13 +29,43 @@ window.onload = function() {
           "responses": {
             "204": {
               "description": ""
+            },
+            "400": {
+              "description": "Bad request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "errorsMessages": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "message": {
+                              "type": "string"
+                            },
+                            "field": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
-          }
+          },
+          "tags": [
+            "Auth"
+          ]
         }
       },
       "/auth/login": {
         "post": {
           "operationId": "AuthController_loginUser",
+          "summary": "User authorization",
           "parameters": [],
           "requestBody": {
             "required": true,
@@ -59,37 +79,129 @@ window.onload = function() {
           },
           "responses": {
             "200": {
-              "description": ""
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LoginForSwaggerType"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
             }
-          }
+          },
+          "tags": [
+            "Auth"
+          ]
         }
       },
       "/auth/me": {
         "get": {
           "operationId": "AuthController_getMe",
+          "summary": "Returns user data",
           "parameters": [],
           "responses": {
             "200": {
-              "description": ""
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserEntity"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
             }
-          }
+          },
+          "tags": [
+            "Auth"
+          ]
         }
       },
       "/users": {
         "get": {
           "operationId": "UsersController_getAllUsers",
-          "parameters": [],
+          "summary": "Get all users",
+          "parameters": [
+            {
+              "name": "pageSize",
+              "required": false,
+              "in": "query",
+              "description": "Number of elements to return",
+              "schema": {
+                "default": 9,
+                "type": "integer"
+              }
+            },
+            {
+              "name": "sortDirection",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "default": "desc",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "description": "What field to sort by",
+              "schema": {
+                "default": "createdAt"
+              }
+            },
+            {
+              "name": "pageNumber",
+              "required": false,
+              "in": "query",
+              "description": "Page number to return",
+              "schema": {
+                "default": 1,
+                "type": "integer"
+              }
+            }
+          ],
           "responses": {
             "200": {
-              "description": ""
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/QueryUserViewModel"
+                  }
+                }
+              }
             }
-          }
+          },
+          "tags": [
+            "Users"
+          ]
         }
       },
       "/users/{userId}": {
         "put": {
           "operationId": "UsersController_updateUser",
-          "parameters": [],
+          "summary": "Update current user",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "description": "User id",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
           "requestBody": {
             "required": true,
             "content": {
@@ -102,24 +214,68 @@ window.onload = function() {
           },
           "responses": {
             "200": {
-              "description": ""
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserViewModel"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
             }
-          }
+          },
+          "tags": [
+            "Users"
+          ]
         },
         "delete": {
           "operationId": "UsersController_deleteUser",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": ""
+          "summary": "Delete user",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "description": "User id",
+              "schema": {
+                "type": "string"
+              }
             }
-          }
+          ],
+          "responses": {
+            "204": {
+              "description": "User deleted"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          },
+          "tags": [
+            "Users"
+          ]
         }
       },
       "/profile/{userId}": {
         "post": {
-          "operationId": "ProfilesControllers_createProfile",
-          "parameters": [],
+          "operationId": "ProfilesControllers_createOrUpdateProfile",
+          "summary": "Create or update profile",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "description": "User id",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
           "requestBody": {
             "required": true,
             "content": {
@@ -131,10 +287,20 @@ window.onload = function() {
             }
           },
           "responses": {
-            "201": {
-              "description": ""
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProfileEntity"
+                  }
+                }
+              }
             }
-          }
+          },
+          "tags": [
+            "Profile"
+          ]
         }
       }
     },
@@ -157,19 +323,345 @@ window.onload = function() {
       "schemas": {
         "RegistrationDto": {
           "type": "object",
-          "properties": {}
+          "properties": {
+            "fullName": {
+              "type": "string",
+              "minimum": 3,
+              "maximum": 20
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string",
+              "minimum": 3,
+              "maximum": 20
+            }
+          },
+          "required": [
+            "fullName",
+            "email",
+            "password"
+          ]
         },
         "LoginDto": {
           "type": "object",
-          "properties": {}
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "Email"
+            },
+            "password": {
+              "type": "string",
+              "description": "Password"
+            }
+          },
+          "required": [
+            "email",
+            "password"
+          ]
+        },
+        "LoginForSwaggerType": {
+          "type": "object",
+          "properties": {
+            "accessToken": {
+              "type": "string",
+              "description": "Access token for authentication."
+            }
+          },
+          "required": [
+            "accessToken"
+          ]
+        },
+        "UserEntity": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "description": "User id"
+            },
+            "fullName": {
+              "type": "string",
+              "description": "Full name"
+            },
+            "email": {
+              "type": "string",
+              "description": "Email"
+            },
+            "createdAt": {
+              "type": "string",
+              "description": "Created date"
+            }
+          },
+          "required": [
+            "id",
+            "fullName",
+            "email",
+            "createdAt"
+          ]
+        },
+        "Profile": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "description": "Profile id"
+            },
+            "userId": {
+              "type": "number",
+              "description": "User id"
+            },
+            "lookingForAJob": {
+              "type": "boolean"
+            },
+            "lookingForAJobDescription": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "userId",
+            "lookingForAJob",
+            "lookingForAJobDescription",
+            "avatar",
+            "country",
+            "city",
+            "status"
+          ]
+        },
+        "UserTypeForQueryRepo": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "description": "User id"
+            },
+            "fullName": {
+              "type": "string",
+              "description": "Full name"
+            },
+            "email": {
+              "type": "string",
+              "description": "Email"
+            },
+            "createdAt": {
+              "type": "string",
+              "description": "Created date"
+            },
+            "follow": {
+              "type": "boolean",
+              "description": "Follow or Unfollow"
+            },
+            "profile": {
+              "description": "User profile",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Profile"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "fullName",
+            "email",
+            "createdAt",
+            "follow",
+            "profile"
+          ]
+        },
+        "QueryUserViewModel": {
+          "type": "object",
+          "properties": {
+            "pagesCount": {
+              "type": "number",
+              "description": "Number of items sorted"
+            },
+            "page": {
+              "type": "number",
+              "description": "Number of pages"
+            },
+            "pageSize": {
+              "type": "number",
+              "description": "Page Size"
+            },
+            "totalCount": {
+              "type": "number",
+              "description": "Total items"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/UserTypeForQueryRepo"
+              }
+            }
+          },
+          "required": [
+            "pagesCount",
+            "page",
+            "pageSize",
+            "totalCount",
+            "items"
+          ]
         },
         "UpdateUserDto": {
           "type": "object",
-          "properties": {}
+          "properties": {
+            "fullName": {
+              "type": "string",
+              "description": "Full name"
+            },
+            "email": {
+              "type": "string",
+              "description": "Email"
+            },
+            "password": {
+              "type": "string",
+              "description": "Password"
+            },
+            "avatar": {
+              "type": "string",
+              "description": "Path"
+            },
+            "follow": {
+              "type": "boolean"
+            },
+            "status": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "fullName",
+            "email",
+            "password",
+            "avatar",
+            "follow",
+            "status",
+            "country",
+            "city"
+          ]
+        },
+        "UserViewModel": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "description": "User id"
+            },
+            "fullName": {
+              "type": "string",
+              "description": "Full name"
+            },
+            "email": {
+              "type": "string",
+              "description": "Email"
+            },
+            "createdAt": {
+              "type": "string",
+              "description": "Created date"
+            },
+            "follow": {
+              "type": "boolean",
+              "description": "Follow or Unfollow"
+            }
+          },
+          "required": [
+            "id",
+            "fullName",
+            "email",
+            "createdAt",
+            "follow"
+          ]
         },
         "ProfileDto": {
           "type": "object",
-          "properties": {}
+          "properties": {
+            "lookingForAJob": {
+              "type": "boolean"
+            },
+            "lookingForAJobDescription": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "lookingForAJob",
+            "lookingForAJobDescription",
+            "avatar",
+            "country",
+            "city",
+            "status"
+          ]
+        },
+        "ProfileEntity": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "description": "Profile"
+            },
+            "userId": {
+              "type": "number",
+              "description": "User id"
+            },
+            "lookingForAJob": {
+              "type": "boolean"
+            },
+            "lookingForAJobDescription": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "userId",
+            "lookingForAJob",
+            "lookingForAJobDescription",
+            "avatar",
+            "country",
+            "city",
+            "status"
+          ]
         }
       }
     }

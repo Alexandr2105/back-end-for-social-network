@@ -16,17 +16,26 @@ import { LoginDto } from './dto/login.dto';
 import { CreateJwtCommand } from './application/useCases/create.jwt.use-case';
 import { JwtAuthGuard } from '../../common/guards/jwt.auth.guard';
 import { GetInformationAboutCommand } from '../users/application/useCases/get.information.about.user.use-case';
+import { ApiTags } from '@nestjs/swagger';
+import {
+  SwaggerDecoratorByGetInformationMe,
+  SwaggerDecoratorByLogin,
+  SwaggerDecoratorByRegistration,
+} from './swagger/swagger.auth.decorators';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly commandBus: CommandBus) {}
 
+  @SwaggerDecoratorByRegistration()
   @HttpCode(204)
   @Post('registration')
   async registration(@Body() body: RegistrationDto): Promise<void> {
-    await this.commandBus.execute(new CreateUserCommand(body));
+    return await this.commandBus.execute(new CreateUserCommand(body));
   }
 
+  @SwaggerDecoratorByLogin()
   @UseGuards(LocalAuthGuard)
   @HttpCode(200)
   @Post('login')
@@ -58,6 +67,7 @@ export class AuthController {
   //   res.send(token);
   // }
 
+  @SwaggerDecoratorByGetInformationMe()
   @UseGuards(JwtAuthGuard)
   @Get('me')
   async getMe(@Req() req: any): Promise<any> {

@@ -4,13 +4,17 @@ import { CreateOrUpdateProfileCommand } from './application/useCases/create.or.u
 import { ProfileDto } from './dto/profile.dto';
 import { ProfileEntity } from './entities/profile.entity';
 import { UserIdDto } from '../users/dto/user.id.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { SwaggerDecoratorByCreateOrUpdateProfile } from './swagger/swagger.profile.decorators';
 
+@ApiTags('Profile')
 @Controller('profile')
 export class ProfilesControllers {
   constructor(private readonly commandCommandBus: CommandBus) {}
 
+  @SwaggerDecoratorByCreateOrUpdateProfile()
   @Post(':userId')
-  async createProfile(
+  async createOrUpdateProfile(
     @Body() body: ProfileDto,
     @Param() param: UserIdDto,
   ): Promise<ProfileEntity> {

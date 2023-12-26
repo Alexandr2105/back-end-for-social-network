@@ -15,7 +15,14 @@ import { UserIdDto } from './dto/user.id.dto';
 import { DeleteUserCommand } from './application/useCases/delete.user.use-case';
 import { QueryHelper } from '../../common/helper/query.helper';
 import { QueryUserViewModel } from './viewModels/query.user.view.model';
+import { ApiTags } from '@nestjs/swagger';
+import {
+  SwaggerDecoratorByDeleteUser,
+  SwaggerDecoratorByGetAllUsers,
+  SwaggerDecoratorByUpdateUser,
+} from './swagger/swagger.users.decorators';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(
@@ -23,12 +30,14 @@ export class UsersController {
     private readonly queryHelper: QueryHelper,
   ) {}
 
+  @SwaggerDecoratorByGetAllUsers()
   @Get()
   async getAllUsers(@Query() query: any): Promise<QueryUserViewModel> {
     const queryParam = this.queryHelper.queryParamHelper(query);
     return this.commandCommandBus.execute(new GetAllUsersCommand(queryParam));
   }
 
+  @SwaggerDecoratorByUpdateUser()
   @Put(':userId')
   async updateUser(
     @Param() param: UserIdDto,
@@ -39,6 +48,7 @@ export class UsersController {
     );
   }
 
+  @SwaggerDecoratorByDeleteUser()
   @Delete(':userId')
   async deleteUser(@Param() param: UserIdDto) {
     return this.commandCommandBus.execute(new DeleteUserCommand(param.userId));

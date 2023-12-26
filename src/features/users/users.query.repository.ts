@@ -52,7 +52,12 @@ export class UsersQueryRepository {
   async getUserById(userId: number): Promise<any> {
     return this.usersCollection.findOne({
       where: { id: userId },
-      select: { id: true, fullName: true, createdAt: true, email: true },
+      select: {
+        id: true,
+        fullName: true,
+        createdAt: true,
+        email: true,
+      },
     });
   }
 }
