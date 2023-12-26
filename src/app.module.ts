@@ -30,6 +30,8 @@ import { ProfilesControllers } from './features/profiles/profiles.controllers';
 import { CreateOrUpdateProfileUseCase } from './features/profiles/application/useCases/create.or.update.profile.use-case';
 import { ProfileRepository } from './features/profiles/profile.repository';
 import { ProfileQueryRepository } from './features/profiles/profile.query.repository';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 config();
 
@@ -54,6 +56,10 @@ const validators = [CheckEmailInDb, CheckUserIdInDb];
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'swagger-static'),
+      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
