@@ -27,6 +27,7 @@ export function SwaggerDecoratorByUpdateUser(): MethodDecorator {
     ApiOperation({ summary: 'Update current user' }),
     ApiResponse({ status: HttpStatus.OK, type: UserViewModel }),
     ApiResponseForSwagger(HttpStatus.NOT_FOUND, 'Not Found'),
+    ApiResponseForSwagger(HttpStatus.UNAUTHORIZED, 'Unauthorized'),
   );
 }
 
