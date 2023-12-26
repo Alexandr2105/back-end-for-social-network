@@ -1,14 +1,16 @@
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { ProfileEntity } from './entities/profile.entity';
+import { Repository } from 'typeorm';
 
-export class ProfileRepository {
+@Injectable()
+export class ProfileQueryRepository {
   constructor(
     @InjectRepository(ProfileEntity)
     private readonly profileRepository: Repository<ProfileEntity>,
   ) {}
 
-  async createOrUpdateProfile(profile: ProfileEntity): Promise<ProfileEntity> {
-    return this.profileRepository.save(profile);
+  async getProfileInfo(userId: number) {
+    return this.profileRepository.findOneBy({ userId: userId });
   }
 }

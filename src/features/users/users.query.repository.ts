@@ -25,9 +25,6 @@ export class UsersQueryRepository {
         email: true,
         createdAt: true,
         follow: true,
-        profile: {
-          avatar: true,
-        },
       },
       relations: { profile: true },
       order: { [queryParam.sortBy]: queryParam.sortDirection },

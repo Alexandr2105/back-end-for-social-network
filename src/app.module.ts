@@ -27,8 +27,9 @@ import { QueryHelper } from './common/helper/query.helper';
 import { ContactsUserEntity } from './features/profiles/entities/contacts.user.entity';
 import { ProfileEntity } from './features/profiles/entities/profile.entity';
 import { ProfilesControllers } from './features/profiles/profiles.controllers';
-import { CreateProfileUseCase } from './features/profiles/application/useCases/create.profile.use-case';
+import { CreateOrUpdateProfileUseCase } from './features/profiles/application/useCases/create.or.update.profile.use-case';
 import { ProfileRepository } from './features/profiles/profile.repository';
+import { ProfileQueryRepository } from './features/profiles/profile.query.repository';
 
 config();
 
@@ -41,9 +42,14 @@ const useCases = [
   GetAllUsersUseCase,
   UpdateUserUseCase,
   DeleteUserUseCase,
-  CreateProfileUseCase,
+  CreateOrUpdateProfileUseCase,
 ];
-const repositories = [UsersRepository, UsersQueryRepository, ProfileRepository];
+const repositories = [
+  UsersRepository,
+  UsersQueryRepository,
+  ProfileRepository,
+  ProfileQueryRepository,
+];
 const validators = [CheckEmailInDb, CheckUserIdInDb];
 
 @Module({
