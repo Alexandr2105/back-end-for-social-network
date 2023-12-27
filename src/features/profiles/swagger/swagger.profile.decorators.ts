@@ -9,3 +9,10 @@ export function SwaggerDecoratorByCreateOrUpdateProfile(): MethodDecorator {
     ApiResponse({ status: HttpStatus.OK, type: ProfileEntity }),
   );
 }
+
+export function SwaggerDecoratorByGetProfile(): MethodDecorator {
+  return applyDecorators(
+    ApiOperation({ summary: 'Get profile for current user' }),
+    ApiResponse({ status: HttpStatus.OK, type: ProfileEntity }),
+  );
+}

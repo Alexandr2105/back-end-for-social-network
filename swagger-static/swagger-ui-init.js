@@ -307,6 +307,7 @@ window.onload = function() {
         },
         "get": {
           "operationId": "ProfilesControllers_getProfile",
+          "summary": "Get profile for current user",
           "parameters": [
             {
               "name": "userId",
@@ -320,7 +321,14 @@ window.onload = function() {
           ],
           "responses": {
             "200": {
-              "description": ""
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProfileEntity"
+                  }
+                }
+              }
             }
           },
           "tags": [

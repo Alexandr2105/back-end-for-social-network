@@ -5,7 +5,10 @@ import { ProfileDto } from './dto/profile.dto';
 import { ProfileEntity } from './entities/profile.entity';
 import { UserIdDto } from '../users/dto/user.id.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { SwaggerDecoratorByCreateOrUpdateProfile } from './swagger/swagger.profile.decorators';
+import {
+  SwaggerDecoratorByCreateOrUpdateProfile,
+  SwaggerDecoratorByGetProfile,
+} from './swagger/swagger.profile.decorators';
 import { GetProfileForCurrentUserCommand } from './application/useCases/get.profile.for.current.user.use-case';
 
 @ApiTags('Profile')
@@ -24,6 +27,7 @@ export class ProfilesControllers {
     );
   }
 
+  @SwaggerDecoratorByGetProfile()
   @Get(':userId')
   async getProfile(@Param() param: UserIdDto): Promise<ProfileEntity> {
     return this.commandCommandBus.execute(
