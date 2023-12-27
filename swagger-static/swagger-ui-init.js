@@ -223,6 +223,9 @@ window.onload = function() {
                 }
               }
             },
+            "401": {
+              "description": "Unauthorized"
+            },
             "404": {
               "description": "Not Found"
             }
@@ -296,6 +299,28 @@ window.onload = function() {
                   }
                 }
               }
+            }
+          },
+          "tags": [
+            "Profile"
+          ]
+        },
+        "get": {
+          "operationId": "ProfilesControllers_getProfile",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "description": "User id",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
             }
           },
           "tags": [

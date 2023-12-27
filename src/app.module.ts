@@ -32,6 +32,7 @@ import { ProfileRepository } from './features/profiles/profile.repository';
 import { ProfileQueryRepository } from './features/profiles/profile.query.repository';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { GetProfileForCurrentUserUseCase } from './features/profiles/application/useCases/get.profile.for.current.user.use-case';
 
 config();
 
@@ -45,6 +46,7 @@ const useCases = [
   UpdateUserUseCase,
   DeleteUserUseCase,
   CreateOrUpdateProfileUseCase,
+  GetProfileForCurrentUserUseCase,
 ];
 const repositories = [
   UsersRepository,

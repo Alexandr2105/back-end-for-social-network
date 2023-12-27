@@ -10,7 +10,7 @@ export class ProfileQueryRepository {
     private readonly profileRepository: Repository<ProfileEntity>,
   ) {}
 
-  async getProfileInfo(userId: number) {
+  async getProfileInfo(userId: number): Promise<ProfileEntity> {
     return this.profileRepository.findOneBy({ userId: userId });
   }
 }
