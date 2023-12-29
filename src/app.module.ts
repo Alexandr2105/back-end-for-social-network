@@ -33,11 +33,12 @@ import { ProfileQueryRepository } from './features/profiles/profile.query.reposi
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { GetProfileForCurrentUserUseCase } from './features/profiles/application/useCases/get.profile.for.current.user.use-case';
+import { RefreshStrategy } from './common/strategies/refresh.strategy';
 
 config();
 
 const entities = [UserEntity, ProfileEntity, ContactsUserEntity];
-const strategies = [LocalStrategy, JwtStrategy];
+const strategies = [LocalStrategy, JwtStrategy, RefreshStrategy];
 const useCases = [
   CreateUserUseCase,
   CreateJwtUseCase,

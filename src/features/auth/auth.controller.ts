@@ -45,7 +45,7 @@ export class AuthController {
     @Res() res: any,
   ): Promise<void> {
     const { accessToken, refreshToken } = await this.commandBus.execute(
-      new CreateJwtCommand(req.user.userId),
+      new CreateJwtCommand(req.user.id),
     );
     res.cookie('refreshToken', refreshToken, {
       httpOnly: false,
