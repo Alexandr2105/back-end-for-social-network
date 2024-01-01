@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { FollowersEntity } from './entities/followers.entity';
 import { Injectable } from '@nestjs/common';
 
@@ -20,7 +20,10 @@ export class FollowerRepository {
     });
   }
 
-  async deleteFollower(userId: number, followId: number) {
+  async deleteFollower(
+    userId: number,
+    followId: number,
+  ): Promise<DeleteResult> {
     return this.followersRepository.delete({
       userId: userId,
       followId: followId,
