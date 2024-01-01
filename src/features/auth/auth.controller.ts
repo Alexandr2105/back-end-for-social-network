@@ -37,7 +37,7 @@ export class AuthController {
 
   @SwaggerDecoratorByLogin()
   @UseGuards(LocalAuthGuard)
-  @HttpCode(200)
+  @HttpCode(201)
   @Post('login')
   async loginUser(
     @Req() req: any,
@@ -69,6 +69,7 @@ export class AuthController {
 
   @SwaggerDecoratorByGetInformationMe()
   @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
   @Get('me')
   async getMe(@Req() req: any): Promise<any> {
     return this.commandBus.execute(new GetInformationAboutCommand(req.user.id));

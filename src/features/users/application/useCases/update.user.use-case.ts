@@ -15,6 +15,7 @@ export class UpdateUserUseCase implements ICommandHandler<UpdateUserCommand> {
 
   async execute(command: UpdateUserCommand): Promise<boolean> {
     const userId = +command.userId;
-    return this.usersRepository.updateUser(userId, command.body);
+    const result = await this.usersRepository.updateUser(userId, command.body);
+    return result.affected === 1;
   }
 }

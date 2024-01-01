@@ -1,7 +1,14 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ProfileEntity } from '../../profiles/entities/profile.entity';
 import { ContactsUserEntity } from '../../profiles/entities/contacts.user.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { FollowersEntity } from '../../followers/entities/followers.entity';
 
 @Entity()
 export class UserEntity {
@@ -24,6 +31,8 @@ export class UserEntity {
 
   @OneToOne(() => ProfileEntity, (profile) => profile.user)
   profile: ProfileEntity;
-  @OneToOne(() => ContactsUserEntity, (contactUser) => contactUser.userId)
+  @OneToOne(() => ContactsUserEntity, (contactUser) => contactUser.user)
   contactUser: ContactsUserEntity;
+  @OneToMany(() => FollowersEntity, (follows) => follows.user)
+  follows: FollowersEntity[];
 }

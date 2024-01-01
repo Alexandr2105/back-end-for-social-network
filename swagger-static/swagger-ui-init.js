@@ -335,6 +335,46 @@ window.onload = function() {
             "Profile"
           ]
         }
+      },
+      "/followers/{userId}": {
+        "post": {
+          "operationId": "FollowersController_createFollower",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "description": "User id",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          }
+        },
+        "delete": {
+          "operationId": "FollowersController_deleteFollower",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "description": "User id",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": ""
+            }
+          }
+        }
       }
     },
     "info": {

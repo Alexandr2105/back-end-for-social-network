@@ -34,7 +34,9 @@ export class UsersController {
   @Get()
   async getAllUsers(@Query() query: any): Promise<QueryUserViewModel> {
     const queryParam = this.queryHelper.queryParamHelper(query);
-    return this.commandCommandBus.execute(new GetAllUsersCommand(queryParam));
+    return this.commandCommandBus.execute(
+      new GetAllUsersCommand(queryParam, 11),
+    );
   }
 
   @SwaggerDecoratorByUpdateUser()
@@ -50,7 +52,7 @@ export class UsersController {
 
   @SwaggerDecoratorByDeleteUser()
   @Delete(':userId')
-  async deleteUser(@Param() param: UserIdDto) {
+  async deleteUser(@Param() param: UserIdDto): Promise<boolean> {
     return this.commandCommandBus.execute(new DeleteUserCommand(param.userId));
   }
 }

@@ -34,10 +34,20 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { GetProfileForCurrentUserUseCase } from './features/profiles/application/useCases/get.profile.for.current.user.use-case';
 import { RefreshStrategy } from './common/strategies/refresh.strategy';
+import { FollowersEntity } from './features/followers/entities/followers.entity';
+import { FollowersController } from './features/followers/followers.controller';
+import { CreateFollowerUseCase } from './features/followers/application/useCases/createFollower.use-case';
+import { FollowerRepository } from './features/followers/follower.repository';
+import { DeleteFollowerUseCase } from './features/followers/application/useCases/deleteFollower.use-case';
 
 config();
 
-const entities = [UserEntity, ProfileEntity, ContactsUserEntity];
+const entities = [
+  UserEntity,
+  ProfileEntity,
+  ContactsUserEntity,
+  FollowersEntity,
+];
 const strategies = [LocalStrategy, JwtStrategy, RefreshStrategy];
 const useCases = [
   CreateUserUseCase,
@@ -48,12 +58,15 @@ const useCases = [
   DeleteUserUseCase,
   CreateOrUpdateProfileUseCase,
   GetProfileForCurrentUserUseCase,
+  CreateFollowerUseCase,
+  DeleteFollowerUseCase,
 ];
 const repositories = [
   UsersRepository,
   UsersQueryRepository,
   ProfileRepository,
   ProfileQueryRepository,
+  FollowerRepository,
 ];
 const validators = [CheckEmailInDb, CheckUserIdInDb];
 
@@ -88,6 +101,7 @@ const validators = [CheckEmailInDb, CheckUserIdInDb];
     AuthController,
     UsersController,
     ProfilesControllers,
+    FollowersController,
   ],
   providers: [
     AppService,
