@@ -9,7 +9,11 @@ import { HttpExceptionFilter } from '../../exception.filter';
 export const createApp = (app: INestApplication) => {
   app.use(cookieParser());
   app.enableCors({
-    origin: ['http://localhost:63342', 'http://localhost:3000'],
+    origin: [
+      'http://localhost:63342',
+      'http://localhost:3000',
+      'https://social-network-front-old-version.vercel.app',
+    ],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
     preflightContinue: false,
     optionsSuccessStatus: 204,
