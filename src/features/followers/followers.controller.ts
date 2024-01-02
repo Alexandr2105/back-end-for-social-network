@@ -11,14 +11,15 @@ import { CommandBus } from '@nestjs/cqrs';
 import { UserIdDto } from '../users/dto/user.id.dto';
 import { CreateFollowerCommand } from './application/useCases/createFollower.use-case';
 import { DeleteFollowerCommand } from './application/useCases/deleteFollower.use-case';
-import { JwtAuthGuard } from '../../common/guards/jwt.auth.guard';
 import { FollowersEntity } from './entities/followers.entity';
+import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
 
 @Controller('followers')
 export class FollowersController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
+  @UseGuards(RefreshAuthGuard)
   @HttpCode(201)
   @Post(':userId')
   async createFollower(
@@ -26,11 +27,13 @@ export class FollowersController {
     @Req() req: any,
   ): Promise<FollowersEntity> {
     return this.commandBus.execute(
-      new CreateFollowerCommand(req.user.id, param.userId),
+      // new CreateFollowerCommand(req.user.id, param.userId),
+      new CreateFollowerCommand(req.user.userId, param.userId),
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
+  @UseGuards(RefreshAuthGuard)
   @Delete(':userId')
   @HttpCode(204)
   async deleteFollower(
@@ -38,7 +41,8 @@ export class FollowersController {
     @Req() req: any,
   ): Promise<boolean> {
     return this.commandBus.execute(
-      new DeleteFollowerCommand(req.user.id, param.userId),
+      // new DeleteFollowerCommand(req.user.id, param.userId),
+      new DeleteFollowerCommand(req.user.userId, param.userId),
     );
   }
 }

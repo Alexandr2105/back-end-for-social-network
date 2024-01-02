@@ -14,7 +14,6 @@ import { CreateUserCommand } from '../users/application/useCases/create.user.use
 import { LocalAuthGuard } from '../../common/guards/local.auth.guard';
 import { LoginDto } from './dto/login.dto';
 import { CreateJwtCommand } from './application/useCases/create.jwt.use-case';
-import { JwtAuthGuard } from '../../common/guards/jwt.auth.guard';
 import { GetInformationAboutCommand } from '../users/application/useCases/get.information.about.user.use-case';
 import { ApiTags } from '@nestjs/swagger';
 import {
@@ -22,6 +21,7 @@ import {
   SwaggerDecoratorByLogin,
   SwaggerDecoratorByRegistration,
 } from './swagger/swagger.auth.decorators';
+import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -48,8 +48,9 @@ export class AuthController {
       new CreateJwtCommand(req.user.id),
     );
     res.cookie('refreshToken', refreshToken, {
-      httpOnly: false,
-      secure: false,
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
     });
     res.send(accessToken);
   }
@@ -68,10 +69,13 @@ export class AuthController {
   // }
 
   @SwaggerDecoratorByGetInformationMe()
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
+  @UseGuards(RefreshAuthGuard)
   @HttpCode(200)
   @Get('me')
   async getMe(@Req() req: any): Promise<any> {
-    return this.commandBus.execute(new GetInformationAboutCommand(req.user.id));
+    return this.commandBus.execute(
+      new GetInformationAboutCommand(req.user.userId),
+    );
   }
 }
