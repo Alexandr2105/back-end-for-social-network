@@ -1,5 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UsersQueryRepository } from '../../users.query.repository';
+import { UserViewModel } from '../../viewModels/user.view.model';
 
 export class GetInformationAboutCommand {
   constructor(public userId: number) {}
@@ -11,7 +12,7 @@ export class GetInformationAboutUserUseCase
 {
   constructor(private readonly usersQueryRepository: UsersQueryRepository) {}
 
-  async execute(command: GetInformationAboutCommand): Promise<any> {
+  async execute(command: GetInformationAboutCommand): Promise<UserViewModel> {
     return this.usersQueryRepository.getUserById(command.userId);
   }
 }

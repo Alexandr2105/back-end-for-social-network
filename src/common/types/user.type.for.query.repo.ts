@@ -21,6 +21,8 @@ class Profile {
 }
 
 export class UserTypeForQueryRepo extends UserViewModel {
+  @ApiProperty({ type: 'boolean', description: 'Follow or Unfollow' })
+  follow: boolean;
   @ApiProperty({ type: () => Profile, description: 'User profile' })
   profile: Profile;
 }

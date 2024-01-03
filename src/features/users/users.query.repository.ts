@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { QueryHelper } from '../../common/helper/query.helper';
 import { QueryUserViewModel } from './viewModels/query.user.view.model';
+import { UserViewModel } from './viewModels/user.view.model';
 
 @Injectable()
 export class UsersQueryRepository {
@@ -49,7 +50,7 @@ export class UsersQueryRepository {
       where: { email: email },
     });
   }
-  async getUserById(userId: number): Promise<any> {
+  async getUserById(userId: number): Promise<UserViewModel> {
     return this.usersCollection.findOne({
       where: { id: userId },
       select: {

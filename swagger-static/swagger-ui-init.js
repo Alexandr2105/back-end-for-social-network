@@ -339,6 +339,7 @@ window.onload = function() {
       "/followers/{userId}": {
         "post": {
           "operationId": "FollowersController_createFollower",
+          "summary": "Create Follower",
           "parameters": [
             {
               "name": "userId",
@@ -352,12 +353,29 @@ window.onload = function() {
           ],
           "responses": {
             "201": {
-              "description": ""
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FollowersEntity"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
             }
-          }
+          },
+          "tags": [
+            "Followers"
+          ]
         },
         "delete": {
           "operationId": "FollowersController_deleteFollower",
+          "summary": "Delete Follower",
           "parameters": [
             {
               "name": "userId",
@@ -372,8 +390,17 @@ window.onload = function() {
           "responses": {
             "204": {
               "description": ""
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
             }
-          }
+          },
+          "tags": [
+            "Followers"
+          ]
         }
       }
     },
@@ -650,18 +677,13 @@ window.onload = function() {
             "createdAt": {
               "type": "string",
               "description": "Created date"
-            },
-            "follow": {
-              "type": "boolean",
-              "description": "Follow or Unfollow"
             }
           },
           "required": [
             "id",
             "fullName",
             "email",
-            "createdAt",
-            "follow"
+            "createdAt"
           ]
         },
         "ProfileDto": {
@@ -734,6 +756,32 @@ window.onload = function() {
             "country",
             "city",
             "status"
+          ]
+        },
+        "FollowersEntity": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "description": "Id"
+            },
+            "userId": {
+              "type": "number",
+              "description": "Follower id"
+            },
+            "followId": {
+              "type": "number",
+              "description": "Following id"
+            },
+            "createdAt": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "userId",
+            "followId",
+            "createdAt"
           ]
         }
       }

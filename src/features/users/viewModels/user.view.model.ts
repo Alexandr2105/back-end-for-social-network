@@ -9,6 +9,4 @@ export class UserViewModel {
   email: string;
   @ApiProperty({ type: 'string', description: 'Created date' })
   createdAt: string;
-  @ApiProperty({ type: 'boolean', description: 'Follow or Unfollow' })
-  follow: boolean;
 }

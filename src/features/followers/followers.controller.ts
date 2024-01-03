@@ -13,11 +13,18 @@ import { CreateFollowerCommand } from './application/useCases/createFollower.use
 import { DeleteFollowerCommand } from './application/useCases/deleteFollower.use-case';
 import { FollowersEntity } from './entities/followers.entity';
 import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
+import { ApiTags } from '@nestjs/swagger';
+import {
+  SwaggerDecoratorByCreateFollower,
+  SwaggerDecoratorByDeleteFollower,
+} from './swagger/swagger.followers.decorators';
 
+@ApiTags('Followers')
 @Controller('followers')
 export class FollowersController {
   constructor(private readonly commandBus: CommandBus) {}
 
+  @SwaggerDecoratorByCreateFollower()
   // @UseGuards(JwtAuthGuard)
   @UseGuards(RefreshAuthGuard)
   @HttpCode(201)
@@ -32,6 +39,7 @@ export class FollowersController {
     );
   }
 
+  @SwaggerDecoratorByDeleteFollower()
   // @UseGuards(JwtAuthGuard)
   @UseGuards(RefreshAuthGuard)
   @Delete(':userId')

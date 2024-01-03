@@ -22,6 +22,7 @@ import {
   SwaggerDecoratorByRegistration,
 } from './swagger/swagger.auth.decorators';
 import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
+import { UserViewModel } from '../users/viewModels/user.view.model';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -73,7 +74,7 @@ export class AuthController {
   @UseGuards(RefreshAuthGuard)
   @HttpCode(200)
   @Get('me')
-  async getMe(@Req() req: any): Promise<any> {
+  async getMe(@Req() req: any): Promise<UserViewModel> {
     return this.commandBus.execute(
       new GetInformationAboutCommand(req.user.userId),
     );
