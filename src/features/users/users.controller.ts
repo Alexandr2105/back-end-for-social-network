@@ -8,35 +8,32 @@ import {
   Query,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { GetAllUsersCommand } from './application/useCases/get.All.users.use-case';
 import { UpdateUserCommand } from './application/useCases/update.user.use-case';
 import { UpdateUserDto } from './dto/update.user.dto';
 import { UserIdDto } from './dto/user.id.dto';
 import { DeleteUserCommand } from './application/useCases/delete.user.use-case';
-import { QueryHelper } from '../../common/helper/query.helper';
-import { QueryUserViewModel } from './viewModels/query.user.view.model';
 import { ApiTags } from '@nestjs/swagger';
 import {
   SwaggerDecoratorByDeleteUser,
   SwaggerDecoratorByGetAllUsers,
   SwaggerDecoratorByUpdateUser,
 } from './swagger/swagger.users.decorators';
+import { RefreshCode } from '../auth/validators/get.user.by.refresh.token';
+import { GetAllUsersCommand } from './application/useCases/get.All.users.use-case';
+import { QueryUserViewModel } from './viewModels/query.user.view.model';
 
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(
-    private readonly commandCommandBus: CommandBus,
-    private readonly queryHelper: QueryHelper,
-  ) {}
+  constructor(private readonly commandCommandBus: CommandBus) {}
 
   @SwaggerDecoratorByGetAllUsers()
   @Get()
-  async getAllUsers(@Query() query: any): Promise<QueryUserViewModel> {
-    const queryParam = this.queryHelper.queryParamHelper(query);
-    return this.commandCommandBus.execute(
-      new GetAllUsersCommand(queryParam, 11),
-    );
+  async getAllUsers(
+    @Query() query: any,
+    @RefreshCode() code: string,
+  ): Promise<QueryUserViewModel> {
+    return this.commandCommandBus.execute(new GetAllUsersCommand(query, code));
   }
 
   @SwaggerDecoratorByUpdateUser()

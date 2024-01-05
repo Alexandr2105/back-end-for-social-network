@@ -7,7 +7,7 @@ import { config } from 'dotenv';
 import { UserEntity } from './features/users/entites/users.entity';
 import { AuthController } from './features/auth/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { CreateJwt } from './features/auth/create.jwt';
+import { ServiceJwt } from './features/auth/service.jwt';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UsersRepository } from './features/users/users.repository';
 import { CheckEmailInDb } from './features/auth/validators/check.email.in.db';
@@ -105,7 +105,7 @@ const validators = [CheckEmailInDb, CheckUserIdInDb];
   ],
   providers: [
     AppService,
-    CreateJwt,
+    ServiceJwt,
     BcryptService,
     QueryHelper,
     ...strategies,

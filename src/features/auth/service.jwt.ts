@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { settings } from '../../common/helper/settings';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-export class CreateJwt {
+export class ServiceJwt {
   constructor(
-    protected jwt: JwtService,
-    protected refreshToken: JwtService,
+    private readonly jwt: JwtService,
+    private readonly refreshToken: JwtService,
   ) {}
 
   creatJWT(userId: string) {
@@ -28,5 +28,14 @@ export class CreateJwt {
         secret: settings.REFRESH_TOKEN_SECRET,
       },
     );
+  }
+
+  getUserByRefreshCode(code: string): Promise<number> {
+    try {
+      const data = this.jwt.verify(code, {
+        secret: settings.REFRESH_TOKEN_SECRET,
+      });
+      return data.userId;
+    } catch (e) {}
   }
 }
