@@ -51,7 +51,7 @@ export class AuthController {
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
+      // sameSite: 'none',
     });
     res.send(accessToken);
   }

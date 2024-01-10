@@ -18,14 +18,7 @@ export const createApp = (app: INestApplication) => {
     preflightContinue: false,
     optionsSuccessStatus: 204,
     credentials: true,
-    // allowedHeaders: ['Accept', 'Content-Type', 'Authorization'],
-    allowedHeaders: [
-      'Origin',
-      'X-Requested-With',
-      'Content-Type',
-      'Accept',
-      'Authorization',
-    ],
+    allowedHeaders: ['Accept', 'Content-Type', 'Authorization'],
   });
   app.useGlobalPipes(
     new ValidationPipe({
