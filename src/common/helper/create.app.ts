@@ -9,26 +9,11 @@ import { HttpExceptionFilter } from '../../exception.filter';
 export const createApp = (app: INestApplication) => {
   app.use(cookieParser());
   app.enableCors({
-    // origin: [
-    //   'http://localhost:63342',
-    //   'http://localhost:3000',
-    //   'https://social-network-front-old-version.vercel.app',
-    // ],
-
-    origin: (origin, callback) => {
-      const allowedOrigins = [
-        'http://localhost:63342',
-        'http://localhost:3000',
-        'https://social-network-front-old-version.vercel.app',
-      ];
-
-      if (allowedOrigins.includes(origin)) {
-        callback(null, origin);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-
+    origin: [
+      'http://localhost:63342',
+      'http://localhost:3000',
+      'https://social-network-front-old-version.vercel.app',
+    ],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
     preflightContinue: false,
     optionsSuccessStatus: 204,
