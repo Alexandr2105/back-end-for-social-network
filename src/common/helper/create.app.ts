@@ -16,11 +16,9 @@ export const createApp = (app: INestApplication) => {
     ],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
     preflightContinue: false,
-    optionsSuccessStatus: 204,
+    optionsSuccessStatus: 200,
     credentials: true,
     allowedHeaders: ['Accept', 'Content-Type', 'Authorization'],
-    exposedHeaders: ['Authorization'], // Добавьте эту строку
-    maxAge: 3600,
   });
   app.useGlobalPipes(
     new ValidationPipe({
