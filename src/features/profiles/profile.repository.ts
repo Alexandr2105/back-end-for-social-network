@@ -8,7 +8,8 @@ export class ProfileRepository {
     private readonly profileRepository: Repository<ProfileEntity>,
   ) {}
 
-  async createOrUpdateProfile(profile: ProfileEntity): Promise<ProfileEntity> {
-    return this.profileRepository.save(profile);
+  async createOrUpdateProfile(profile: ProfileEntity): Promise<number> {
+    const { userId } = await this.profileRepository.save(profile);
+    return userId;
   }
 }

@@ -22,7 +22,7 @@ import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
 
 @ApiTags('Profile')
 @Controller('profile')
-export class ProfilesControllers {
+export class ProfileController {
   constructor(private readonly commandCommandBus: CommandBus) {}
 
   @SwaggerDecoratorByCreateOrUpdateProfile()

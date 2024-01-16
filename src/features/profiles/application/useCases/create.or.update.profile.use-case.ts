@@ -24,6 +24,7 @@ export class CreateOrUpdateProfileUseCase
     const profileInfo = await this.profileQueryRepository.getProfileInfo(
       +command.userId,
     );
+    let userId;
     if (profileInfo) {
       profileInfo.city = command.body.city;
       profileInfo.status = command.body.status;
@@ -32,7 +33,7 @@ export class CreateOrUpdateProfileUseCase
         command.body.lookingForAJobDescription;
       profileInfo.avatar = command.body.avatar;
       profileInfo.lookingForAJob = command.body.lookingForAJob;
-      return this.profileRepository.createOrUpdateProfile(profileInfo);
+      userId = await this.profileRepository.createOrUpdateProfile(profileInfo);
     } else {
       const newProfile = new ProfileEntity();
       newProfile.city = command.body.city;
@@ -43,7 +44,8 @@ export class CreateOrUpdateProfileUseCase
         command.body.lookingForAJobDescription;
       newProfile.avatar = command.body.avatar;
       newProfile.lookingForAJob = command.body.lookingForAJob;
-      return this.profileRepository.createOrUpdateProfile(newProfile);
+      userId = await this.profileRepository.createOrUpdateProfile(newProfile);
     }
+    return await this.profileQueryRepository.getProfileInfo(userId);
   }
 }

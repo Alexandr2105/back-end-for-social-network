@@ -26,7 +26,7 @@ import { DeleteUserUseCase } from './features/users/application/useCases/delete.
 import { QueryHelper } from './common/helper/query.helper';
 import { ContactsUserEntity } from './features/profiles/entities/contacts.user.entity';
 import { ProfileEntity } from './features/profiles/entities/profile.entity';
-import { ProfilesControllers } from './features/profiles/profiles.controllers';
+import { ProfileController } from './features/profiles/profile.controller';
 import { CreateOrUpdateProfileUseCase } from './features/profiles/application/useCases/create.or.update.profile.use-case';
 import { ProfileRepository } from './features/profiles/profile.repository';
 import { ProfileQueryRepository } from './features/profiles/profile.query.repository';
@@ -100,7 +100,7 @@ const validators = [CheckEmailInDb, CheckUserIdInDb];
     AppController,
     AuthController,
     UsersController,
-    ProfilesControllers,
+    ProfileController,
     FollowersController,
   ],
   providers: [
