@@ -78,7 +78,7 @@ window.onload = function() {
             }
           },
           "responses": {
-            "200": {
+            "201": {
               "description": "",
               "content": {
                 "application/json": {
@@ -280,7 +280,7 @@ window.onload = function() {
             }
           },
           "responses": {
-            "200": {
+            "201": {
               "description": "",
               "content": {
                 "application/json": {

@@ -18,7 +18,7 @@ export function SwaggerDecoratorByLogin(): MethodDecorator {
   return applyDecorators(
     ApiOperation({ summary: 'User authorization' }),
     ApiResponse({
-      status: HttpStatus.OK,
+      status: HttpStatus.CREATED,
       type: LoginForSwaggerType,
     }),
     ApiResponseForSwagger(HttpStatus.UNAUTHORIZED, 'Unauthorized'),

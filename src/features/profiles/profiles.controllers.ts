@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  HttpCode,
   Param,
   Post,
   Req,
@@ -28,7 +27,6 @@ export class ProfilesControllers {
 
   @SwaggerDecoratorByCreateOrUpdateProfile()
   @UseGuards(RefreshAuthGuard)
-  @HttpCode(201)
   @Post()
   async createOrUpdateProfile(
     @Body() body: ProfileDto,

@@ -6,7 +6,7 @@ export function SwaggerDecoratorByCreateOrUpdateProfile(): MethodDecorator {
   return applyDecorators(
     // ApiBearerAuth(),
     ApiOperation({ summary: 'Create or update profile' }),
-    ApiResponse({ status: HttpStatus.OK, type: ProfileEntity }),
+    ApiResponse({ status: HttpStatus.CREATED, type: ProfileEntity }),
   );
 }
 
