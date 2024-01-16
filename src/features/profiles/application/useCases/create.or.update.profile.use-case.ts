@@ -2,12 +2,11 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ProfileDto } from '../../dto/profile.dto';
 import { ProfileRepository } from '../../profile.repository';
 import { ProfileEntity } from '../../entities/profile.entity';
-import { UserIdDto } from '../../../users/dto/user.id.dto';
 import { ProfileQueryRepository } from '../../profile.query.repository';
 
 export class CreateOrUpdateProfileCommand {
   constructor(
-    public param: UserIdDto,
+    public userId: string,
     public body: ProfileDto,
   ) {}
 }
@@ -23,7 +22,7 @@ export class CreateOrUpdateProfileUseCase
 
   async execute(command: CreateOrUpdateProfileCommand): Promise<ProfileEntity> {
     const profileInfo = await this.profileQueryRepository.getProfileInfo(
-      +command.param.userId,
+      +command.userId,
     );
     if (profileInfo) {
       profileInfo.city = command.body.city;
@@ -39,7 +38,7 @@ export class CreateOrUpdateProfileUseCase
       newProfile.city = command.body.city;
       newProfile.status = command.body.status;
       newProfile.country = command.body.country;
-      newProfile.userId = +command.param.userId;
+      newProfile.userId = +command.userId;
       newProfile.lookingForAJobDescription =
         command.body.lookingForAJobDescription;
       newProfile.avatar = command.body.avatar;

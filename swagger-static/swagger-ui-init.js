@@ -264,21 +264,11 @@ window.onload = function() {
           ]
         }
       },
-      "/profile/{userId}": {
+      "/profile": {
         "post": {
           "operationId": "ProfilesControllers_createOrUpdateProfile",
           "summary": "Create or update profile",
-          "parameters": [
-            {
-              "name": "userId",
-              "required": true,
-              "in": "path",
-              "description": "User id",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
+          "parameters": [],
           "requestBody": {
             "required": true,
             "content": {
@@ -304,7 +294,9 @@ window.onload = function() {
           "tags": [
             "Profile"
           ]
-        },
+        }
+      },
+      "/profile/{userId}": {
         "get": {
           "operationId": "ProfilesControllers_getProfile",
           "summary": "Get profile for current user",
