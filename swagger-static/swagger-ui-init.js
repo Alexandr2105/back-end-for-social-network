@@ -266,7 +266,7 @@ window.onload = function() {
       },
       "/profile": {
         "post": {
-          "operationId": "ProfilesControllers_createOrUpdateProfile",
+          "operationId": "ProfileController_createOrUpdateProfile",
           "summary": "Create or update profile",
           "parameters": [],
           "requestBody": {
@@ -298,7 +298,7 @@ window.onload = function() {
       },
       "/profile/{userId}": {
         "get": {
-          "operationId": "ProfilesControllers_getProfile",
+          "operationId": "ProfileController_getProfile",
           "summary": "Get profile for current user",
           "parameters": [
             {
