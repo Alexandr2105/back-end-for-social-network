@@ -39,6 +39,10 @@ import { FollowersController } from './features/followers/followers.controller';
 import { CreateFollowerUseCase } from './features/followers/application/useCases/createFollower.use-case';
 import { FollowerRepository } from './features/followers/follower.repository';
 import { DeleteFollowerUseCase } from './features/followers/application/useCases/deleteFollower.use-case';
+import { RefreshTokenDataEntity } from './features/devices/entities/refresh.token.data.entity';
+import { SaveInfoAboutUserDevicesUseCase } from './features/devices/useCases/save.info.about.user.devices.use-case';
+import { DevicesRepository } from './features/devices/devices.repository';
+import { LogoutCurrentDeviceUseCase } from './features/devices/useCases/logout.currentDevice.use-case';
 
 config();
 
@@ -47,6 +51,7 @@ const entities = [
   ProfileEntity,
   ContactsUserEntity,
   FollowersEntity,
+  RefreshTokenDataEntity,
 ];
 const strategies = [LocalStrategy, JwtStrategy, RefreshStrategy];
 const useCases = [
@@ -60,6 +65,8 @@ const useCases = [
   GetProfileForCurrentUserUseCase,
   CreateFollowerUseCase,
   DeleteFollowerUseCase,
+  SaveInfoAboutUserDevicesUseCase,
+  LogoutCurrentDeviceUseCase,
 ];
 const repositories = [
   UsersRepository,
@@ -67,6 +74,7 @@ const repositories = [
   ProfileRepository,
   ProfileQueryRepository,
   FollowerRepository,
+  DevicesRepository,
 ];
 const validators = [CheckEmailInDb, CheckUserIdInDb];
 

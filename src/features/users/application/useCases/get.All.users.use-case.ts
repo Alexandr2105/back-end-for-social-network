@@ -23,15 +23,15 @@ export class GetAllUsersUseCase implements ICommandHandler<GetAllUsersCommand> {
 
   async execute(command: GetAllUsersCommand): Promise<QueryUserViewModel> {
     const queryParam = this.queryHelper.queryParamHelper(command.queryParam);
-    const userId = await this.serviceJwt.getUserByRefreshCode(
+    const info = await this.serviceJwt.getRefreshTokenInformationByRefreshCode(
       command.refreshCode,
     );
     const users = await this.usersQueryRepository.getAllUsers(queryParam);
-    const follows = await this.followerRepository.getFollows(userId);
+    const follows = await this.followerRepository.getFollows(info.userId);
 
     for (const item of users.items) {
       for (const follow of follows) {
-        if (userId && item.id === follow.followId) {
+        if (info.userId && item.id === follow.followId) {
           item.follow = true;
         }
       }

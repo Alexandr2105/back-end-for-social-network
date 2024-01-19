@@ -50,6 +50,7 @@ export class UsersQueryRepository {
       where: { email: email },
     });
   }
+
   async getUserById(userId: number): Promise<UserViewModel> {
     return this.usersCollection.findOne({
       where: { id: userId },

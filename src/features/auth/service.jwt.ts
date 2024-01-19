@@ -9,19 +9,20 @@ export class ServiceJwt {
     private readonly refreshToken: JwtService,
   ) {}
 
-  creatJWT(userId: string) {
+  creatJWT(userId: number, deviceId: string) {
     return {
       accessToken: this.jwt.sign(
-        { userId: userId },
+        { userId: userId, deviceId: deviceId },
         { expiresIn: settings.TOKEN_LIFE, secret: settings.JWT_SECRET },
       ),
     };
   }
 
-  creatRefreshJWT(userId: string) {
+  creatRefreshJWT(userId: number, deviceId: string) {
     return this.refreshToken.sign(
       {
         userId: userId,
+        deviceId: deviceId,
       },
       {
         expiresIn: settings.REFRESH_TOKEN_LIFE,
@@ -30,12 +31,11 @@ export class ServiceJwt {
     );
   }
 
-  getUserByRefreshCode(code: string): Promise<number> {
+  getRefreshTokenInformationByRefreshCode(code: string) {
     try {
-      const data = this.jwt.verify(code, {
+      return this.jwt.verify(code, {
         secret: settings.REFRESH_TOKEN_SECRET,
       });
-      return data.userId;
     } catch (e) {}
   }
 }

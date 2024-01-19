@@ -9,6 +9,7 @@ import { ProfileEntity } from '../../profiles/entities/profile.entity';
 import { ContactsUserEntity } from '../../profiles/entities/contacts.user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { FollowersEntity } from '../../followers/entities/followers.entity';
+import { RefreshTokenDataEntity } from '../../devices/entities/refresh.token.data.entity';
 
 @Entity()
 export class UserEntity {
@@ -35,4 +36,6 @@ export class UserEntity {
   contactUser: ContactsUserEntity;
   @OneToMany(() => FollowersEntity, (follows) => follows.user)
   follows: FollowersEntity[];
+  @OneToMany(() => RefreshTokenDataEntity, (devices) => devices.user)
+  devices: RefreshTokenDataEntity[];
 }

@@ -122,6 +122,20 @@ window.onload = function() {
           ]
         }
       },
+      "/auth/logout": {
+        "delete": {
+          "operationId": "AuthController_logout",
+          "parameters": [],
+          "responses": {
+            "204": {
+              "description": ""
+            }
+          },
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
       "/users": {
         "get": {
           "operationId": "UsersController_getAllUsers",

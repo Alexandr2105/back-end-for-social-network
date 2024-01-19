@@ -24,7 +24,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     );
 
     if (user.password === hashPassword) {
-      return user;
+      return { userId: user.id };
     } else {
       throw new UnauthorizedException();
     }

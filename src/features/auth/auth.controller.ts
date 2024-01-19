@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Post,
@@ -23,6 +24,7 @@ import {
 } from './swagger/swagger.auth.decorators';
 import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
 import { UserViewModel } from '../users/viewModels/user.view.model';
+import { LogoutCurrentDeviceCommand } from '../devices/useCases/logout.currentDevice.use-case';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -46,7 +48,7 @@ export class AuthController {
     @Res() res: any,
   ): Promise<void> {
     const { accessToken, refreshToken } = await this.commandBus.execute(
-      new CreateJwtCommand(req.user.id),
+      new CreateJwtCommand(req.user.userId, req.ip, req.headers['user-agent']),
     );
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
@@ -77,6 +79,15 @@ export class AuthController {
   async getMe(@Req() req: any): Promise<UserViewModel> {
     return this.commandBus.execute(
       new GetInformationAboutCommand(req.user.userId),
+    );
+  }
+
+  @UseGuards(RefreshAuthGuard)
+  @HttpCode(204)
+  @Delete('logout')
+  async logout(@Req() req: any) {
+    await this.commandBus.execute(
+      new LogoutCurrentDeviceCommand(req.user.userId, req.user.deviceId),
     );
   }
 }
