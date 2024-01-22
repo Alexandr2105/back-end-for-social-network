@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       payload.deviceId,
     );
     if (info) {
-      return { id: payload.userId };
+      return { userId: payload.userId };
     } else {
       throw new UnauthorizedException();
     }
