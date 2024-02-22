@@ -27,7 +27,7 @@ export class GetAllUsersUseCase implements ICommandHandler<GetAllUsersCommand> {
       command.refreshCode,
     );
     const users = await this.usersQueryRepository.getAllUsers(queryParam);
-    const follows = await this.followerRepository.getFollows(info.userId);
+    const follows = await this.followerRepository.getFollows(info?.userId);
 
     for (const item of users.items) {
       for (const follow of follows) {
