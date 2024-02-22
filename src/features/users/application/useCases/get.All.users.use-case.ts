@@ -31,7 +31,7 @@ export class GetAllUsersUseCase implements ICommandHandler<GetAllUsersCommand> {
 
     for (const item of users.items) {
       for (const follow of follows) {
-        if (info.userId && item.id === follow.followId) {
+        if (info?.userId && item.id === follow.followId) {
           item.follow = true;
         }
       }
