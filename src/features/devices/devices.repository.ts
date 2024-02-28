@@ -16,10 +16,15 @@ export class DevicesRepository {
     return this.devicesCollection.save(deviceInfo);
   }
 
-  async deleteCurrentDevice(userId: number, deviceId: string): Promise<void> {
+  async deleteCurrentDevice(
+    userId: number,
+    deviceId: string,
+    exp: number,
+  ): Promise<void> {
     await this.devicesCollection.delete({
       userId: userId,
       deviceId: deviceId,
+      exp: exp,
     });
   }
 

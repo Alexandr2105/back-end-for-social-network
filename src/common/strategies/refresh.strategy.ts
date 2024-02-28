@@ -27,7 +27,11 @@ export class RefreshStrategy extends PassportStrategy(
       payload.deviceId,
     );
     if (info) {
-      return { userId: payload.userId, deviceId: payload.deviceId };
+      return {
+        userId: payload.userId,
+        deviceId: payload.deviceId,
+        exp: payload.exp,
+      };
     } else {
       throw new UnauthorizedException();
     }

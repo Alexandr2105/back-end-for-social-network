@@ -5,6 +5,7 @@ export class LogoutCurrentDeviceCommand {
   constructor(
     public userId: number,
     public deviceId: string,
+    public exp: number,
   ) {}
 }
 
@@ -18,6 +19,7 @@ export class LogoutCurrentDeviceUseCase
     await this.devicesRepository.deleteCurrentDevice(
       command.userId,
       command.deviceId,
+      command.exp,
     );
   }
 }

@@ -4,6 +4,7 @@ import { QueryUserViewModel } from '../../viewModels/query.user.view.model';
 import { FollowerRepository } from '../../../followers/follower.repository';
 import { QueryHelper } from '../../../../common/helper/query.helper';
 import { ServiceJwt } from '../../../auth/service.jwt';
+import { DevicesRepository } from '../../../devices/devices.repository';
 
 export class GetAllUsersCommand {
   constructor(
@@ -19,6 +20,7 @@ export class GetAllUsersUseCase implements ICommandHandler<GetAllUsersCommand> {
     private readonly followerRepository: FollowerRepository,
     private readonly queryHelper: QueryHelper,
     private readonly serviceJwt: ServiceJwt,
+    private readonly devicesRepository: DevicesRepository,
   ) {}
 
   async execute(command: GetAllUsersCommand): Promise<QueryUserViewModel> {
@@ -26,16 +28,24 @@ export class GetAllUsersUseCase implements ICommandHandler<GetAllUsersCommand> {
     const info = await this.serviceJwt.getRefreshTokenInformationByRefreshCode(
       command.refreshCode,
     );
+    const checkDevice = await this.devicesRepository.getCurrentDeviceByDeviceId(
+      info.deviceId,
+    );
+
     const users = await this.usersQueryRepository.getAllUsers(queryParam);
     const follows = await this.followerRepository.getFollows(info?.userId);
 
-    for (const item of users.items) {
-      for (const follow of follows) {
-        if (info?.userId && item.id === follow.followId) {
-          item.follow = true;
+    if (checkDevice && info.exp === checkDevice.exp) {
+      for (const item of users.items) {
+        for (const follow of follows) {
+          if (info?.userId && item.id === follow.followId) {
+            item.follow = true;
+          }
         }
       }
+      return users;
+    } else {
+      return users;
     }
-    return users;
   }
 }

@@ -87,7 +87,11 @@ export class AuthController {
   @Delete('logout')
   async logout(@Req() req: any) {
     await this.commandBus.execute(
-      new LogoutCurrentDeviceCommand(req.user.userId, req.user.deviceId),
+      new LogoutCurrentDeviceCommand(
+        req.user.userId,
+        req.user.deviceId,
+        req.user.exp,
+      ),
     );
   }
 }
