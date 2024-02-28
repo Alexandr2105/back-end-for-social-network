@@ -43,6 +43,7 @@ import { RefreshTokenDataEntity } from './features/devices/entities/refresh.toke
 import { SaveInfoAboutUserDevicesUseCase } from './features/devices/useCases/save.info.about.user.devices.use-case';
 import { DevicesRepository } from './features/devices/devices.repository';
 import { LogoutCurrentDeviceUseCase } from './features/devices/useCases/logout.currentDevice.use-case';
+import { UpdateJwtUseCase } from './features/auth/application/useCases/update.jwt.use-case';
 
 config();
 
@@ -67,6 +68,7 @@ const useCases = [
   DeleteFollowerUseCase,
   SaveInfoAboutUserDevicesUseCase,
   LogoutCurrentDeviceUseCase,
+  UpdateJwtUseCase,
 ];
 const repositories = [
   UsersRepository,

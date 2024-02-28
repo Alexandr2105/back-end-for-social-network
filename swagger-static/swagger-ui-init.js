@@ -97,6 +97,20 @@ window.onload = function() {
           ]
         }
       },
+      "/auth/refresh-token": {
+        "post": {
+          "operationId": "AuthController_refreshTokenRecovery",
+          "parameters": [],
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          },
+          "tags": [
+            "Auth"
+          ]
+        }
+      },
       "/auth/me": {
         "get": {
           "operationId": "AuthController_getMe",

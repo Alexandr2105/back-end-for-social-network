@@ -26,6 +26,7 @@ import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
 import { UserViewModel } from '../users/viewModels/user.view.model';
 import { LogoutCurrentDeviceCommand } from '../devices/useCases/logout.currentDevice.use-case';
 import { JwtAuthGuard } from '../../common/guards/jwt.auth.guard';
+import { UpdateJwtCommand } from './application/useCases/update.jwt.use-case';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -59,18 +60,25 @@ export class AuthController {
     res.send(accessToken);
   }
 
-  // @UseGuards(RefreshAuthGuard)
-  // @HttpCode(200)
-  // @Post('refresh-token')
-  // async createRefreshToken(@Req() req, @Res() res) {
-  //   const token = this.jwtService.creatJWT(req.user.userId);
-  //   const refreshToken = this.jwtService.creatRefreshJWT(req.user.userId);
-  //   res.cookie('refreshToken', refreshToken, {
-  //     httpOnly: false,
-  //     secure: false,
-  //   });
-  //   res.send(token);
-  // }
+  @UseGuards(RefreshAuthGuard)
+  @HttpCode(201)
+  @Post('refresh-token')
+  async refreshTokenRecovery(@Req() req: any, @Res() res: any) {
+    const { accessToken, refreshToken } = await this.commandBus.execute(
+      new UpdateJwtCommand(
+        req.user.userId,
+        req.ip,
+        req.headers['user-agent'],
+        req.user.deviceId,
+      ),
+    );
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
+    res.send(accessToken);
+  }
 
   @SwaggerDecoratorByGetInformationMe()
   @UseGuards(JwtAuthGuard)

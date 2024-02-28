@@ -36,6 +36,8 @@ export class ServiceJwt {
       return this.jwt.verify(code, {
         secret: settings.REFRESH_TOKEN_SECRET,
       });
-    } catch (e) {}
+    } catch (e) {
+      return false;
+    }
   }
 }
