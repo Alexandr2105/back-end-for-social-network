@@ -1,5 +1,10 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common';
-import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+} from '@nestjs/swagger';
 import {
   pageNumberQuery,
   pageSizeQuery,
@@ -12,7 +17,6 @@ import { ApiResponseForSwagger } from '../../../common/helper/api-response-for-s
 
 export function SwaggerDecoratorByGetAllUsers(): MethodDecorator {
   return applyDecorators(
-    // ApiBearerAuth(),
     ApiOperation({ summary: 'Get all users' }),
     ApiResponse({ status: HttpStatus.OK, type: QueryUserViewModel }),
     ApiQuery(pageSizeQuery),
@@ -28,12 +32,13 @@ export function SwaggerDecoratorByUpdateUser(): MethodDecorator {
     ApiResponse({ status: HttpStatus.OK, type: UserViewModel }),
     ApiResponseForSwagger(HttpStatus.NOT_FOUND, 'Not Found'),
     ApiResponseForSwagger(HttpStatus.UNAUTHORIZED, 'Unauthorized'),
+    ApiBearerAuth(),
   );
 }
 
 export function SwaggerDecoratorByDeleteUser(): MethodDecorator {
   return applyDecorators(
-    // ApiBearerAuth(),
+    ApiBearerAuth(),
     ApiOperation({ summary: 'Delete user' }),
     ApiResponseForSwagger(HttpStatus.NO_CONTENT, 'User deleted'),
     ApiResponseForSwagger(HttpStatus.UNAUTHORIZED, 'Unauthorized'),

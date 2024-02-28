@@ -1,5 +1,5 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ApiResponseForSwagger } from '../../../common/helper/api-response-for-swagger';
 import { LoginForSwaggerType } from '../../../common/types/login.for.swagger.type';
 import { UserEntity } from '../../users/entites/users.entity';
@@ -33,7 +33,7 @@ export function SwaggerDecoratorByGetInformationMe(): MethodDecorator {
       type: UserEntity,
     }),
     ApiResponseForSwagger(HttpStatus.UNAUTHORIZED, 'Unauthorized'),
-    // ApiBearerAuth(),
+    ApiBearerAuth(),
   );
 }
 

@@ -25,6 +25,7 @@ import {
 import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
 import { UserViewModel } from '../users/viewModels/user.view.model';
 import { LogoutCurrentDeviceCommand } from '../devices/useCases/logout.currentDevice.use-case';
+import { JwtAuthGuard } from '../../common/guards/jwt.auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -72,8 +73,7 @@ export class AuthController {
   // }
 
   @SwaggerDecoratorByGetInformationMe()
-  // @UseGuards(JwtAuthGuard)
-  @UseGuards(RefreshAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
   @Get('me')
   async getMe(@Req() req: any): Promise<UserViewModel> {

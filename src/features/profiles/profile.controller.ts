@@ -18,7 +18,7 @@ import {
   SwaggerDecoratorByGetProfile,
 } from './swagger/swagger.profile.decorators';
 import { GetProfileForCurrentUserCommand } from './application/useCases/get.profile.for.current.user.use-case';
-import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
+import { JwtAuthGuard } from '../../common/guards/jwt.auth.guard';
 
 @ApiTags('Profile')
 @Controller('profile')
@@ -26,7 +26,7 @@ export class ProfileController {
   constructor(private readonly commandCommandBus: CommandBus) {}
 
   @SwaggerDecoratorByCreateOrUpdateProfile()
-  @UseGuards(RefreshAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post()
   async createOrUpdateProfile(
     @Body() body: ProfileDto,
@@ -38,6 +38,7 @@ export class ProfileController {
   }
 
   @SwaggerDecoratorByGetProfile()
+  @UseGuards(JwtAuthGuard)
   @Get(':userId')
   async getProfile(@Param() param: UserIdDto): Promise<ProfileEntity> {
     return this.commandCommandBus.execute(

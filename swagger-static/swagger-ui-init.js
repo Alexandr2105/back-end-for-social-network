@@ -119,6 +119,11 @@ window.onload = function() {
           },
           "tags": [
             "Auth"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
           ]
         }
       },
@@ -246,6 +251,11 @@ window.onload = function() {
           },
           "tags": [
             "Users"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
           ]
         },
         "delete": {
@@ -275,6 +285,11 @@ window.onload = function() {
           },
           "tags": [
             "Users"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
           ]
         }
       },
@@ -307,6 +322,11 @@ window.onload = function() {
           },
           "tags": [
             "Profile"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
           ]
         }
       },
@@ -339,6 +359,11 @@ window.onload = function() {
           },
           "tags": [
             "Profile"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
           ]
         }
       },
@@ -377,6 +402,11 @@ window.onload = function() {
           },
           "tags": [
             "Followers"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
           ]
         },
         "delete": {
@@ -406,6 +436,11 @@ window.onload = function() {
           },
           "tags": [
             "Followers"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
           ]
         }
       }

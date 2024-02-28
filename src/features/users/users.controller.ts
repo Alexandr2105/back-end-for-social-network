@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { UpdateUserCommand } from './application/useCases/update.user.use-case';
@@ -21,6 +22,7 @@ import {
 import { RefreshCode } from '../auth/validators/get.user.by.refresh.token';
 import { GetAllUsersCommand } from './application/useCases/get.All.users.use-case';
 import { QueryUserViewModel } from './viewModels/query.user.view.model';
+import { JwtAuthGuard } from '../../common/guards/jwt.auth.guard';
 
 @ApiTags('Users')
 @Controller('users')
@@ -37,6 +39,7 @@ export class UsersController {
   }
 
   @SwaggerDecoratorByUpdateUser()
+  @UseGuards(JwtAuthGuard)
   @Put(':userId')
   async updateUser(
     @Param() param: UserIdDto,
@@ -48,6 +51,7 @@ export class UsersController {
   }
 
   @SwaggerDecoratorByDeleteUser()
+  @UseGuards(JwtAuthGuard)
   @Delete(':userId')
   async deleteUser(@Param() param: UserIdDto): Promise<boolean> {
     return this.commandCommandBus.execute(new DeleteUserCommand(param.userId));
