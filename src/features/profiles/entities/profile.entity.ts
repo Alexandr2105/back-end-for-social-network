@@ -34,6 +34,9 @@ export class ProfileEntity {
   @ApiProperty({ type: 'string' })
   @Column({ default: null })
   status: string;
+  @ApiProperty({ type: 'string' })
+  @Column({ default: null })
+  aboutMe: string;
 
   @OneToOne(() => UserEntity, (user) => user.profile, { onDelete: 'CASCADE' })
   @JoinColumn()

@@ -100,10 +100,21 @@ window.onload = function() {
       "/auth/refresh-token": {
         "post": {
           "operationId": "AuthController_refreshTokenRecovery",
+          "summary": "Update refreshToken",
           "parameters": [],
           "responses": {
             "201": {
-              "description": ""
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LoginForSwaggerType"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
             }
           },
           "tags": [
@@ -144,10 +155,14 @@ window.onload = function() {
       "/auth/logout": {
         "delete": {
           "operationId": "AuthController_logout",
+          "summary": "Logout",
           "parameters": [],
           "responses": {
             "204": {
-              "description": ""
+              "description": "No Content"
+            },
+            "401": {
+              "description": "If the JWT refreshToken inside cookie is missing, expired or incorrect"
             }
           },
           "tags": [
@@ -800,6 +815,9 @@ window.onload = function() {
             },
             "status": {
               "type": "string"
+            },
+            "aboutMe": {
+              "type": "string"
             }
           },
           "required": [
@@ -810,7 +828,8 @@ window.onload = function() {
             "avatar",
             "country",
             "city",
-            "status"
+            "status",
+            "aboutMe"
           ]
         },
         "FollowersEntity": {

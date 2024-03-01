@@ -37,13 +37,24 @@ export function SwaggerDecoratorByGetInformationMe(): MethodDecorator {
   );
 }
 
-export function SwaggerDecoratorByRefreshLink(): MethodDecorator {
+export function SwaggerDecoratorByRefreshToken(): MethodDecorator {
   return applyDecorators(
-    ApiOperation({ summary: 'Refresh confirmation link' }),
-    ApiResponseForSwagger(HttpStatus.NO_CONTENT, 'Link updated'),
+    ApiOperation({ summary: 'Update refreshToken' }),
+    ApiResponse({
+      status: HttpStatus.CREATED,
+      type: LoginForSwaggerType,
+    }),
+    ApiResponseForSwagger(HttpStatus.UNAUTHORIZED, 'Unauthorized'),
+  );
+}
+
+export function SwaggerDecoratorByLogout(): MethodDecorator {
+  return applyDecorators(
+    ApiOperation({ summary: 'Logout' }),
+    ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'No Content' }),
     ApiResponseForSwagger(
-      HttpStatus.BAD_REQUEST,
-      'List of possible errors:<br>1.Bad request<br>2.Invalid email',
+      HttpStatus.UNAUTHORIZED,
+      'If the JWT refreshToken inside cookie is missing, expired or incorrect',
     ),
   );
 }

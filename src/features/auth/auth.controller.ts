@@ -20,6 +20,8 @@ import { ApiTags } from '@nestjs/swagger';
 import {
   SwaggerDecoratorByGetInformationMe,
   SwaggerDecoratorByLogin,
+  SwaggerDecoratorByLogout,
+  SwaggerDecoratorByRefreshToken,
   SwaggerDecoratorByRegistration,
 } from './swagger/swagger.auth.decorators';
 import { RefreshAuthGuard } from '../../common/guards/refresh.auth.guard';
@@ -60,6 +62,7 @@ export class AuthController {
     res.send(accessToken);
   }
 
+  @SwaggerDecoratorByRefreshToken()
   @UseGuards(RefreshAuthGuard)
   @HttpCode(201)
   @Post('refresh-token')
@@ -90,6 +93,7 @@ export class AuthController {
     );
   }
 
+  @SwaggerDecoratorByLogout()
   @UseGuards(RefreshAuthGuard)
   @HttpCode(204)
   @Delete('logout')
