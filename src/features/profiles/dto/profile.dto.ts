@@ -34,4 +34,10 @@ export class ProfileDto {
   @Length(0, 100)
   @ApiProperty({ type: 'string' })
   status: string;
+  @IsOptional()
+  @Transform(({ value }) => value.trim())
+  @IsString()
+  @Length(0, 500)
+  @ApiProperty({ type: 'string' })
+  aboutMe: string;
 }
