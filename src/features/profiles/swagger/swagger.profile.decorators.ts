@@ -17,3 +17,11 @@ export function SwaggerDecoratorByGetProfile(): MethodDecorator {
     ApiBearerAuth(),
   );
 }
+
+export function SwaggerDecoratorByPostSaveAvatar(): MethodDecorator {
+  return applyDecorators(
+    ApiOperation({ summary: 'Save user avatar' }),
+    ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'No Content' }),
+    ApiBearerAuth(),
+  );
+}

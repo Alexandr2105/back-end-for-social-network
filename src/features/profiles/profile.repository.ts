@@ -12,4 +12,12 @@ export class ProfileRepository {
     const { userId } = await this.profileRepository.save(profile);
     return userId;
   }
+
+  async updateAvatar(userId: number, avatar: any) {
+    const result = await this.profileRepository.update(
+      { userId: userId },
+      { avatar: avatar },
+    );
+    return result.affected === 1;
+  }
 }

@@ -396,6 +396,26 @@ window.onload = function() {
           ]
         }
       },
+      "/profile/save-avatar": {
+        "post": {
+          "operationId": "ProfileController_saveAvatar",
+          "summary": "Save user avatar",
+          "parameters": [],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            }
+          },
+          "tags": [
+            "Profile"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
       "/followers/{userId}": {
         "post": {
           "operationId": "FollowersController_createFollower",
@@ -776,6 +796,9 @@ window.onload = function() {
             },
             "status": {
               "type": "string"
+            },
+            "aboutMe": {
+              "type": "string"
             }
           },
           "required": [
@@ -784,7 +807,8 @@ window.onload = function() {
             "avatar",
             "country",
             "city",
-            "status"
+            "status",
+            "aboutMe"
           ]
         },
         "ProfileEntity": {

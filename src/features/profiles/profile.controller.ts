@@ -2,10 +2,14 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Req,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateOrUpdateProfileCommand } from './application/useCases/create.or.update.profile.use-case';
@@ -16,9 +20,12 @@ import { ApiTags } from '@nestjs/swagger';
 import {
   SwaggerDecoratorByCreateOrUpdateProfile,
   SwaggerDecoratorByGetProfile,
+  SwaggerDecoratorByPostSaveAvatar,
 } from './swagger/swagger.profile.decorators';
 import { GetProfileForCurrentUserCommand } from './application/useCases/get.profile.for.current.user.use-case';
 import { JwtAuthGuard } from '../../common/guards/jwt.auth.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { SaveAvatarCommand } from './application/useCases/save.avatar.use-case';
 
 @ApiTags('Profile')
 @Controller('profile')
@@ -43,6 +50,20 @@ export class ProfileController {
   async getProfile(@Param() param: UserIdDto): Promise<ProfileEntity> {
     return this.commandCommandBus.execute(
       new GetProfileForCurrentUserCommand(param.userId),
+    );
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(JwtAuthGuard)
+  @SwaggerDecoratorByPostSaveAvatar()
+  @Post('save-avatar')
+  @UseInterceptors(FileInterceptor('avatar'))
+  async saveAvatar(
+    @UploadedFile() avatar: Express.Multer.File,
+    @Req() req: any,
+  ) {
+    return this.commandCommandBus.execute(
+      new SaveAvatarCommand(req.user.userId, avatar),
     );
   }
 }

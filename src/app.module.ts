@@ -44,6 +44,8 @@ import { SaveInfoAboutUserDevicesUseCase } from './features/devices/useCases/sav
 import { DevicesRepository } from './features/devices/devices.repository';
 import { LogoutCurrentDeviceUseCase } from './features/devices/useCases/logout.currentDevice.use-case';
 import { UpdateJwtUseCase } from './features/auth/application/useCases/update.jwt.use-case';
+import { SaveAvatarUseCase } from './features/profiles/application/useCases/save.avatar.use-case';
+import { FileStorageAdapterS3 } from './common/adapters/file.storage.adapter.s3';
 
 config();
 
@@ -69,6 +71,7 @@ const useCases = [
   SaveInfoAboutUserDevicesUseCase,
   LogoutCurrentDeviceUseCase,
   UpdateJwtUseCase,
+  SaveAvatarUseCase,
 ];
 const repositories = [
   UsersRepository,
@@ -118,6 +121,7 @@ const validators = [CheckEmailInDb, CheckUserIdInDb];
     ServiceJwt,
     BcryptService,
     QueryHelper,
+    FileStorageAdapterS3,
     ...strategies,
     ...useCases,
     ...repositories,

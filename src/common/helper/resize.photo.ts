@@ -1,9 +1,9 @@
 import sharp from 'sharp';
 
-export function resizePhoto(photo): Promise<Buffer> {
+export function resizePhoto(photo: any): Promise<Buffer> {
   const buffer = Buffer.from(photo);
   return sharp(buffer)
-    .resize(300, 180, {
+    .resize(600, 600, {
       fit: 'contain',
     })
     .toBuffer();

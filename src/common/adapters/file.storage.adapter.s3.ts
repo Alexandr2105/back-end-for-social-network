@@ -24,8 +24,8 @@ export class FileStorageAdapterS3 {
     });
   }
 
-  async saveAvatar(userId: string, buffer: Buffer) {
-    const key = `${userId}/avatars/${userId}&${+new Date()}_avatar.png`;
+  async saveAvatar(userId: number, buffer: Buffer) {
+    const key = `${userId}/avatars/${userId}/avatar.png`;
 
     const command = new PutObjectCommand({
       Key: key,
