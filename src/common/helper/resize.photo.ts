@@ -1,6 +1,4 @@
-// import sharp from 'sharp';
-
-const sharp = require('sharp');
+import sharp from 'sharp';
 
 export function resizePhoto(photo: any): Promise<Buffer> {
   const buffer = Buffer.from(photo);
