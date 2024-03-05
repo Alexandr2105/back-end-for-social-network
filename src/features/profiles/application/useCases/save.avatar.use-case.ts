@@ -37,6 +37,7 @@ export class SaveAvatarUseCase implements ICommandHandler<SaveAvatarCommand> {
           message: 'Avatar not saved',
         });
       }
+      return avatarUrl;
     } else {
       throw new BadRequestException({
         field: 'avatar',

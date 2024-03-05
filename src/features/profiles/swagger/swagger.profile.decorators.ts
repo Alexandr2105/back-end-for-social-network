@@ -21,7 +21,11 @@ export function SwaggerDecoratorByGetProfile(): MethodDecorator {
 export function SwaggerDecoratorByPostSaveAvatar(): MethodDecorator {
   return applyDecorators(
     ApiOperation({ summary: 'Save user avatar' }),
-    ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'No Content' }),
+    ApiResponse({
+      status: HttpStatus.CREATED,
+      description: 'avatar url',
+      type: String,
+    }),
     ApiBearerAuth(),
   );
 }

@@ -2,8 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   Post,
   Req,
@@ -53,7 +51,6 @@ export class ProfileController {
     );
   }
 
-  @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(JwtAuthGuard)
   @SwaggerDecoratorByPostSaveAvatar()
   @Post('save-avatar')
@@ -61,7 +58,7 @@ export class ProfileController {
   async saveAvatar(
     @UploadedFile() avatar: Express.Multer.File,
     @Req() req: any,
-  ) {
+  ): Promise<string> {
     return this.commandCommandBus.execute(
       new SaveAvatarCommand(req.user.userId, avatar),
     );

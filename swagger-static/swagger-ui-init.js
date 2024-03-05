@@ -402,8 +402,15 @@ window.onload = function() {
           "summary": "Save user avatar",
           "parameters": [],
           "responses": {
-            "204": {
-              "description": "No Content"
+            "201": {
+              "description": "avatar url",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           },
           "tags": [

@@ -25,7 +25,7 @@ export class FileStorageAdapterS3 {
   }
 
   async saveAvatar(userId: number, buffer: Buffer) {
-    const key = `${userId}/avatars/${userId}/avatar.png`;
+    const key = `${userId}/avatars/${userId}/${+new Date()}avatar.png`;
 
     const command = new PutObjectCommand({
       Key: key,
